@@ -8,13 +8,7 @@ import { ProgressBar } from "@/components/portal/ProgressBar";
 import type { Database } from "@/lib/supabase/database.types";
 
 type Gap = Database["public"]["Tables"]["gap_reports"]["Row"];
-
-interface AuditReport {
-  id: string;
-  framework: string;
-  readiness_pct: number;
-  findings: { met?: string[]; unmet?: string[] } | null;
-}
+type AuditReport = Database["public"]["Tables"]["audit_reports"]["Row"];
 
 function sevColor(s: string) {
   return s === "critical" || s === "high"
@@ -52,14 +46,13 @@ export default function GapReportPage() {
       .order("created_at", { ascending: false })
       .then(({ data }) => setGaps(data ?? []));
 
-    // audit_reports isn't in the reconstructed schema types — queried loosely,
-    // matching the original page's best-effort `a.findings?.met || []` usage.
+    // audit_reports
     supabase
-      .from("audit_reports" as never)
+      .from("audit_reports")
       .select("*")
       .eq("client_id", client.id)
       .order("generated_at", { ascending: false })
-      .then(({ data }) => setAudits((data as unknown as AuditReport[]) ?? []));
+      .then(({ data }) => setAudits(data ?? []));
   }, [client]);
 
   const notReady = gaps !== null && (!client || gaps.length === 0);

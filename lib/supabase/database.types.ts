@@ -160,6 +160,31 @@ export interface Database {
         >;
         Relationships: [];
       };
+      risk_scores: {
+        Row: {
+          id: string;
+          client_id: string;
+          score: number;
+          breakdown: Record<string, number> | null;
+          generated_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["risk_scores"]["Row"]>;
+        Update: Partial<Database["public"]["Tables"]["risk_scores"]["Row"]>;
+        Relationships: [];
+      };
+      audit_reports: {
+        Row: {
+          id: string;
+          client_id: string;
+          framework: string;
+          readiness_pct: number;
+          findings: { met?: string[]; unmet?: string[] } | null;
+          generated_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["audit_reports"]["Row"]>;
+        Update: Partial<Database["public"]["Tables"]["audit_reports"]["Row"]>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

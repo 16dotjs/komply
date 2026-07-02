@@ -15,12 +15,31 @@ export default async function PortalLayout({
 
   let client = null;
   if (user) {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("clients")
       .select("*")
       .eq("user_id", user.id)
       .single();
-    client = data;
+
+    if (data) {
+      client = data;
+    } else if (error && user.email) {
+      // Fallback used by the original dashboard.html: if no client row is
+      // linked to this auth user yet, match by email and link it now.
+      const { data: byEmail } = await supabase
+        .from("clients")
+        .select("*")
+        .eq("email", user.email)
+        .single();
+
+      if (byEmail) {
+        await supabase
+          .from("clients")
+          .update({ user_id: user.id })
+          .eq("email", user.email);
+        client = byEmail;
+      }
+    }
   }
 
   return (
