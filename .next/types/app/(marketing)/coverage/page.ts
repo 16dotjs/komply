@@ -1,4 +1,4 @@
-// File: C:\Users\user\OneDrive\Desktop\code must pay\code must pay\komply\app\(marketing)\coverage\page.tsx
+// File: C:\dev\komply\app\(marketing)\coverage\page.tsx
 import * as entry from '../../../../../app/(marketing)/coverage/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
