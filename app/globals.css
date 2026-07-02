@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper text-ink font-body antialiased;
+  }
+
+  ::placeholder {
+    color: #c4c0bb;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: #8a857e;
+  }
+
+  /* Custom select arrow, used across every <select> in the portal/admin */
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A857E' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+    appearance: none;
+  }
+
+  /* Custom checkbox, used in the contact form and admin modals */
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #e2ddd8;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition:
+      border-color 0.2s,
+      background 0.2s;
+  }
+  input[type="checkbox"]:checked {
+    background: #111110;
+    border-color: #111110;
+  }
+  input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 1px;
+    width: 5px;
+    height: 8px;
+    border-right: 1px solid #f7f4f0;
+    border-bottom: 1px solid #f7f4f0;
+    transform: rotate(45deg);
+  }
+}
+
+@layer components {
+  /* Underline-on-hover nav link, used in the marketing header */
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #bf4a2b;
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  /* Scroll-reveal, used throughout marketing pages */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.75s ease,
+      transform 0.75s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Multi-step form progress dots, used on the contact page */
+  .step-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #e2ddd8;
+    transition: background 0.3s;
+  }
+  .step-dot.active {
+    background: #111110;
+  }
+
+  /* Modal shell, used across admin add/edit/delete dialogs */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 17, 16, 0.5);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .modal-box {
+    background: #f7f4f0;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  /* Tab strip, used on the admin client-detail page */
+  .tab {
+    cursor: pointer;
+    padding: 0.75rem 0;
+    font-size: 13px;
+    font-weight: 300;
+    color: #8a857e;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s;
+    margin-right: 2rem;
+  }
+}
+
+/* Subtle grain texture overlay used on marketing pages */
+.grain-overlay::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
