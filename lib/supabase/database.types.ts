@@ -185,6 +185,17 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["audit_reports"]["Row"]>;
         Relationships: [];
       };
+      admins: {
+        Row: {
+          id: string;
+          user_id: string | null;
+          email: string;
+          created_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["admins"]["Row"]>;
+        Update: Partial<Database["public"]["Tables"]["admins"]["Row"]>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
